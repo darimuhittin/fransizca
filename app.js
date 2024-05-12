@@ -11,11 +11,13 @@ const session = require("express-session");
 const mongoDbStore = require("connect-mongodb-session")(session);
 const { Storage } = require("@google-cloud/storage");
 
+const serverless = require("serverless-http");
+
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
 const uri =
-"mongodb+srv://burak:burak123@cluster0.fog3heb.mongodb.net/basicCMS?retryWrites=true&w=majority";
+  "mongodb+srv://burak:burak123@cluster0.fog3heb.mongodb.net/basicCMS?retryWrites=true&w=majority";
 
 let store = new mongoDbStore({
   uri,
@@ -202,3 +204,5 @@ moongose.connect(uri).then(() => {
     console.log("Database bağlandı ve sunucu çalıştırıldı!");
   });
 });
+
+module.exports.handler = serverless(app);
